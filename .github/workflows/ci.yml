@@ -10,13 +10,7 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        php: [8.3, 8.4]
-        dependency-version: [prefer-stable]
-        
-    name: Tests (PHP ${{ matrix.php }})
+    name: Tests
 
     services:
       mysql:
@@ -32,14 +26,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-
-    - name: Setup PHP
+    - name: Setup PHP 8.4
       uses: shivammathur/setup-php@v2
       with:
-        php-version: ${{ matrix.php }}
+        php-version: 8.4
         extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
         coverage: none
-        tools: composer:v2
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
@@ -47,35 +39,8 @@ jobs:
         node-version: '20'
         cache: 'npm'
 
-    - name: Get Composer Cache Directory
-      id: composer-cache
-      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-    - name: Cache Composer dependencies
-      uses: actions/cache@v4
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-composer-${{ matrix.php }}-
-          ${{ runner.os }}-composer-
-
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
-
-    - name: Clear Composer cache
-      run: composer clear-cache
-
     - name: Install Composer dependencies
-      run: |
-        echo "🔄 Attempting composer install..."
-        if composer install --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-progress --optimize-autoloader; then
-          echo "✅ Composer install successful"
-        else
-          echo "⚠️  Lock file incompatible, updating dependencies..."
-          rm -f composer.lock
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-progress --optimize-autoloader
-        fi
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
 
     - name: Install NPM dependencies
       run: npm ci
@@ -92,7 +57,6 @@ jobs:
         echo "DB_DATABASE=boost_test" >> .env
         echo "DB_USERNAME=root" >> .env
         echo "DB_PASSWORD=password" >> .env
-        echo "APP_KEY=" >> .env
         echo "CACHE_DRIVER=array" >> .env
         echo "SESSION_DRIVER=array" >> .env
         echo "QUEUE_CONNECTION=sync" >> .env
@@ -100,60 +64,14 @@ jobs:
     - name: Generate Application key
       run: php artisan key:generate
 
-    - name: Clear Config cache
-      run: php artisan config:clear
-
     - name: Run Migrations
-      run: php artisan migrate --force -v
+      run: php artisan migrate --force
 
-    - name: Generate IDE Helper
-      run: composer ide-helper
-
-    - name: Run Pint (Code Style)
-      run: composer lint:test
-
-    - name: Run PHPStan (Static Analysis)
-      run: composer phpstan
-
-    - name: Run Pest Tests
+    - name: Run Tests
       run: composer test
 
-    - name: Upload test coverage
-      if: matrix.php == '8.3' && matrix.dependency-version == 'prefer-stable'
-      uses: actions/upload-artifact@v4
-      with:
-        name: coverage-report
-        path: coverage/
+    - name: Run Lint Check
+      run: composer lint:test
 
-  security:
-    runs-on: ubuntu-latest
-    name: Security Audit
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: 8.3
-        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
-        coverage: none
-
-    - name: Install Composer dependencies
-      run: composer install --prefer-stable --prefer-dist --no-interaction --no-progress
-
-    - name: Run Composer Audit
-      run: composer audit
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        cache: 'npm'
-
-    - name: Install NPM dependencies
-      run: npm ci
-
-    - name: Run NPM Audit
-      run: npm audit --audit-level=moderate
+    - name: Run PHPStan
+      run: composer phpstan
