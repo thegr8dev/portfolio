@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 class TicketIDGenerator
@@ -6,8 +7,6 @@ class TicketIDGenerator
     /**
      * Generate a unique ticket ID in the format AK-MMMDD-NNNN
      * where MMM is the month abbreviation, DD is the day, and NNNN is a unique 4-digit number
-     *
-     * @return string
      */
     public static function generate(): string
     {
@@ -28,13 +27,13 @@ class TicketIDGenerator
         // Extract the numeric part or start with 0001
         $nextNumber = 1;
         if ($latestTicket) {
-            $parts      = explode('-', $latestTicket->ticket_id);
+            $parts = explode('-', $latestTicket->ticket_id);
             $lastNumber = (int) end($parts);
             $nextNumber = $lastNumber + 1;
         }
 
         // Format as 4 digits with leading zeros
-        $numberPart = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+        $numberPart = str_pad((string) $nextNumber, 4, '0', STR_PAD_LEFT);
 
         // Combine all parts
         return "{$prefix}-{$month}{$day}-{$numberPart}";

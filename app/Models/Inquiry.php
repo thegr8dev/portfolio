@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use App\InquiryStatus;
@@ -9,6 +10,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 #[ObservedBy(InquiryObserver::class)]
+/**
+ * @mixin IdeHelperInquiry
+ */
 class Inquiry extends Model
 {
     /** @use HasFactory<\Database\Factories\InquiryFactory> */
@@ -28,10 +32,13 @@ class Inquiry extends Model
         'status' => InquiryStatus::class,
     ];
 
+    /**
+     * @return Attribute<string, never>
+     */
     public function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn() => "{$this->first_name} {$this->last_name}"
+            get: fn () => "{$this->first_name} {$this->last_name}"
         );
     }
 
@@ -41,13 +48,5 @@ class Inquiry extends Model
     public function getRouteKeyName(): string
     {
         return 'ticket_id';
-    }
-
-    /**
-     * Retrieve the model for a bound value.
-     */
-    public function resolveRouteBinding($value, $field = null)
-    {
-        return $this->where('ticket_id', $value)->firstOrFail();
     }
 }

@@ -13,7 +13,9 @@
         "laravel/tinker": "^2.10.1"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.6",
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^3.0",
         "laravel/boost": "^1.0",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.13",
@@ -22,7 +24,8 @@
         "nunomaduro/collision": "^8.6",
         "pestphp/pest": "^3.8",
         "pestphp/pest-plugin-laravel": "^3.2",
-        "pestphp/pest-plugin-livewire": "^3.0"
+        "pestphp/pest-plugin-livewire": "^3.0",
+        "rector/rector": "^2.1"
     },
     "autoload": {
         "psr-4": {
@@ -33,7 +36,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "PHPStanRules\\": "phpstan-rules/"
         }
     },
     "scripts": {
@@ -61,6 +65,22 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "pint": "vendor/bin/pint",
+        "pint:test": "vendor/bin/pint --test",
+        "lint": "vendor/bin/phpstan analyse",
+        "generate": "php artisan ide-helper:models --write-mixin --no-interaction",
+        "rector": "vendor/bin/rector process --config=rector-ide-helper.php",
+        "quality": [
+            "@ide-helper",
+            "@rector", 
+            "@pint",
+            "@lint"
+        ],
+        "ci": "bin/ci-test.sh",
+        "ci-full": [
+            "@quality",
+            "@test"
         ]
     },
     "extra": {
@@ -75,6 +95,8 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
+        },
+        "platform": {
         }
     },
     "minimum-stability": "stable",

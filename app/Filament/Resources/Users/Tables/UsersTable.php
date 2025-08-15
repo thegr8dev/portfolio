@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Filament\Resources\Users\Tables;
 
 use Filament\Actions\BulkActionGroup;

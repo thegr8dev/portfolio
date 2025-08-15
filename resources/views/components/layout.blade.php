@@ -15,7 +15,7 @@
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://boost.test/">
+    <meta property="og:url" content="{{ config('app.url') }}">
     <meta property="og:title" content="Ankit Kabra | Engineering Manager / Senior Laravel Developer">
     <meta property="og:description" content="Engineering Manager & Senior Laravel Developer with 6.5+ years building scalable multi-tenant web applications using TALL stack. Expert in Filament, team leadership, and AI integration.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80">
@@ -26,7 +26,7 @@
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://boost.test/">
+    <meta property="twitter:url" content="{{ config('app.url') }}">
     <meta property="twitter:title" content="Ankit Kabra | Engineering Manager / Senior Laravel Developer">
     <meta property="twitter:description" content="Engineering Manager & Senior Laravel Developer with 6.5+ years building scalable multi-tenant web applications using TALL stack. Expert in Filament, team leadership, and AI integration.">
     <meta property="twitter:image" content="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80">
@@ -37,7 +37,7 @@
     <meta name="msapplication-config" content="/browserconfig.xml">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://boost.test/">
+    <link rel="canonical" href="{{ config('app.url') }}">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">

@@ -1,7 +1,10 @@
 <?php
+
 namespace App\Filament\Resources\Users\Schemas;
 
+use App\Models\User;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
 class UserForm
@@ -20,8 +23,12 @@ class UserForm
                 TextInput::make('password')
                     ->label('Password')
                     ->password()
-                    ->dehydrated()
-                    ->required(),
+                    ->dehydrated(fn (?string $state): bool => filled($state))
+                    ->required(fn (string $operation): bool => $operation === 'create'),
+                Toggle::make('is_admin')
+                    ->label('Is Admin')
+                    ->hidden(User::first()->is_admin ?? false)
+                    ->default(false),
             ]);
     }
 }

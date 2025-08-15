@@ -1,14 +1,15 @@
 <?php
+
 namespace App;
 
 use Filament\Support\Contracts\HasLabel;
 
-enum InquiryStatus: string implements HasLabel {
-
-    case Pending    = 'Pending';
+enum InquiryStatus: string implements HasLabel
+{
+    case Pending = 'Pending';
     case InProgress = 'In Progress';
-    case Resolved   = 'Resolved';
-    case Closed     = 'Closed';
+    case Resolved = 'Resolved';
+    case Closed = 'Closed';
 
     public function getLabel(): string
     {

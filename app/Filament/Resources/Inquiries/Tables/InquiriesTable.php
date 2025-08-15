@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Filament\Resources\Inquiries\Tables;
 
 use App\InquiryStatus;
@@ -23,7 +24,7 @@ class InquiriesTable
                     ->searchable()
                     ->sortable()
                     ->copyable()
-                    ->url(fn($record) => route('filament.admin.resources.inquiries.view', ['record' => $record->ticket_id])),
+                    ->url(fn (\App\Models\Inquiry $record) => route('filament.admin.resources.inquiries.view', ['record' => $record->ticket_id])),
                 TextColumn::make('fullName')
                     ->searchable(['first_name', 'last_name']),
                 TextColumn::make('subject')
@@ -33,13 +34,13 @@ class InquiriesTable
                     ->searchable(),
                 TextColumn::make('status')
                     ->badge()
-                    ->color(fn($record) => $record->status->getBadgeColor())
+                    ->color(fn (\App\Models\Inquiry $record) => $record->status->getBadgeColor())
                     ->searchable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime('M d, Y h:i A')
                     ->sortable(),
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('M d, Y h:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -49,7 +50,7 @@ class InquiriesTable
                     ->multiple()
                     ->options(InquiryStatus::class),
             ])
-            ->poll(10)
+            ->poll('10s')
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make(),

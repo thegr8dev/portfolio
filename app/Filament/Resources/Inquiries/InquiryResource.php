@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Filament\Resources\Inquiries;
 
 use App\Filament\Resources\Inquiries\Pages\CreateInquiry;
@@ -48,10 +49,10 @@ class InquiryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListInquiries::route('/'),
+            'index' => ListInquiries::route('/'),
             'create' => CreateInquiry::route('/create'),
-            'view'   => ViewInquiry::route('/{record}'),
-            'edit'   => EditInquiry::route('/{record}/edit'),
+            'view' => ViewInquiry::route('/{record}'),
+            'edit' => EditInquiry::route('/{record}/edit'),
         ];
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Factories;
 
 use App\InquiryStatus;
@@ -18,13 +19,13 @@ class InquiryFactory extends Factory
     public function definition(): array
     {
         return [
-            'ticket_id'  => TicketIDGenerator::generate(),
+            'ticket_id' => TicketIDGenerator::generate(),
             'first_name' => $this->faker->firstName(),
-            'last_name'  => $this->faker->lastName(),
-            'subject'    => $this->faker->sentence(),
-            'email'      => $this->faker->email(),
-            'message'    => $this->faker->paragraph(),
-            'status'     => $this->faker->randomElement(InquiryStatus::cases())->value,
+            'last_name' => $this->faker->lastName(),
+            'subject' => $this->faker->sentence(),
+            'email' => $this->faker->email(),
+            'message' => $this->faker->paragraph(),
+            'status' => $this->faker->randomElement(InquiryStatus::cases())->value,
         ];
     }
 }
