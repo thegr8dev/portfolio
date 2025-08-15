@@ -83,4 +83,3 @@ When adding new model properties:
 ## Workflow Files
 
 - `.github/workflows/ci.yml` - Main CI pipeline
-- `bin/ci-test.sh` - Local CI test script
