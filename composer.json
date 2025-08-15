@@ -77,7 +77,6 @@
             "@pint",
             "@lint"
         ],
-        "ci": "bin/ci-test.sh",
         "ci-full": [
             "@quality",
             "@test"
