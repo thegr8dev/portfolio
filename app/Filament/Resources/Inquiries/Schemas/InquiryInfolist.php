@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Filament\Resources\Inquiries\Schemas;
 
 use App\Models\Inquiry;
@@ -27,7 +28,7 @@ class InquiryInfolist
                                 ->label('Email address'),
                             TextEntry::make('status')
                                 ->badge()
-                                ->color(fn(Inquiry $record) => $record->status->getBadgeColor()),
+                                ->color(fn (Inquiry $record) => $record->status->getBadgeColor()),
                             TextEntry::make('created_at')
                                 ->dateTime('M d, Y h:i A'),
                             TextEntry::make('updated_at')

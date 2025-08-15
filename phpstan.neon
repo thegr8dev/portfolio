@@ -1,0 +1,19 @@
+includes:
+    - phpstan-rules/extension.neon
+
+parameters:
+
+    paths:
+        - app/
+
+    scanFiles:
+        - _ide_helper_models.php
+
+    # Level 10 is the highest level  
+    level: 9
+
+    # Strict property validation - ensures all properties are declared
+    checkUninitializedProperties: true
+    
+    excludePaths:
+        - phpstan-rules/

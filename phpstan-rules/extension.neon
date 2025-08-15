@@ -1,0 +1,9 @@
+services:
+    -
+        class: PHPStanRules\EloquentPropertyRule
+        tags:
+            - phpstan.rules.rule
+
+includes:
+    - ../vendor/larastan/larastan/extension.neon
+    - ../vendor/nesbot/carbon/extension.neon

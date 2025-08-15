@@ -16,7 +16,7 @@ it('generates a ticket ID in the correct format when creating an inquiry', funct
 
     // Get the current month and day
     $currentMonth = strtoupper(date('M'));
-    $currentDay   = date('d');
+    $currentDay = date('d');
 
     // Assert the ticket ID contains the correct month and day
     expect($inquiry->ticket_id)->toContain("{$currentMonth}{$currentDay}");
