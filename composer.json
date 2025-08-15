@@ -66,16 +66,16 @@
             "@php artisan config:clear --ansi",
             "@php artisan test"
         ],
-        "lint": "vendor/bin/pint",
-        "lint:test": "vendor/bin/pint --test",
-        "phpstan": "vendor/bin/phpstan analyse",
-        "ide-helper": "php artisan ide-helper:models --write-mixin --no-interaction",
+        "pint": "vendor/bin/pint",
+        "pint:test": "vendor/bin/pint --test",
+        "lint": "vendor/bin/phpstan analyse",
+        "generate": "php artisan ide-helper:models --write-mixin --no-interaction",
         "rector": "vendor/bin/rector process --config=rector-ide-helper.php",
         "quality": [
             "@ide-helper",
             "@rector", 
-            "@lint",
-            "@phpstan"
+            "@pint",
+            "@lint"
         ],
         "ci": "bin/ci-test.sh",
         "ci-full": [
