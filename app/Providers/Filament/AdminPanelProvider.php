@@ -54,6 +54,12 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->sidebarCollapsibleOnDesktop()
+            ->errorNotifications(true)
+            ->spa(hasPrefetching: true)
+            ->databaseTransactions()
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s');
     }
 }

@@ -1,55 +1,56 @@
 
 <?php
     use App\Filament\Resources\Todos\Pages\CreateTodo;
-    use App\Models\Todo;
-    use App\Models\User;
-    use function Pest\Laravel\actingAs;
-    use function Pest\Laravel\assertDatabaseHas;
-    use function Pest\Livewire\livewire;
+use App\Models\Todo;
+use App\Models\User;
 
-    it('can create a todo', function () {
-        $user = User::factory()->create();
-        actingAs($user);
+use function Pest\Laravel\actingAs;
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Livewire\livewire;
 
-        $data = [
-            'title'       => 'Test Todo',
-            'description' => 'Test description',
-            'assigned_to' => $user->id,
-            'created_by'  => $user->id,
-            'due_date'    => now()->addDay()->format('Y-m-d'),
-        ];
+it('can create a todo', function () {
+    $user = User::factory()->create();
+    actingAs($user);
 
-        $todo = Todo::create($data);
+    $data = [
+        'title' => 'Test Todo',
+        'description' => 'Test description',
+        'assigned_to' => $user->id,
+        'created_by' => $user->id,
+        'due_date' => now()->addDay()->format('Y-m-d'),
+    ];
 
-        assertDatabaseHas('todos', [
-            'title'       => 'Test Todo',
-            'description' => 'Test description',
-            'assigned_to' => $user->id,
-            'created_by'  => $user->id,
-        ]);
-    });
+    $todo = Todo::create($data);
 
-    it('validates required fields for todo', function ($field, $value, $expectedError) {
-        $user = User::factory()->create();
-        actingAs($user);
+    assertDatabaseHas('todos', [
+        'title' => 'Test Todo',
+        'description' => 'Test description',
+        'assigned_to' => $user->id,
+        'created_by' => $user->id,
+    ]);
+});
 
-        $form = [
-            'title'       => 'Test Todo',
-            'description' => 'Test description',
-            'assigned_to' => $user->id,
-            'created_by'  => $user->id,
-            'due_date'    => now()->addDay()->format('Y-m-d'),
-        ];
-        $form[$field] = $value;
+it('validates required fields for todo', function ($field, $value, $expectedError) {
+    $user = User::factory()->create();
+    actingAs($user);
 
-        livewire(CreateTodo::class)
-            ->fillForm($form)
-            ->call('create')
-            ->assertHasFormErrors([$expectedError])
-            ->assertNotNotified()
-            ->assertNoRedirect();
-    })->with([
-        ['title', '', 'title'],
-        ['assigned_to', null, 'assigned_to'],
-        ['created_by', null, 'created_by'],
+    $form = [
+        'title' => 'Test Todo',
+        'description' => 'Test description',
+        'assigned_to' => $user->id,
+        'created_by' => $user->id,
+        'due_date' => now()->addDay()->format('Y-m-d'),
+    ];
+    $form[$field] = $value;
+
+    livewire(CreateTodo::class)
+        ->fillForm($form)
+        ->call('create')
+        ->assertHasFormErrors([$expectedError])
+        ->assertNotNotified()
+        ->assertNoRedirect();
+})->with([
+    ['title', '', 'title'],
+    ['assigned_to', null, 'assigned_to'],
+    ['created_by', null, 'created_by'],
 ]);

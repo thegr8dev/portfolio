@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Filament\Resources\Inquiries\Schemas;
 
 use App\InquiryStatus;
@@ -18,7 +19,7 @@ class InquiryForm
                     ->disabled()
                     ->dehydrated()
                     ->helperText('This will be generated automatically when creating a new inquiry')
-                    ->visible(fn($record) => $record !== null)
+                    ->visible(fn ($record) => $record !== null)
                     ->columnSpanFull(),
                 TextInput::make('first_name')
                     ->required(),
