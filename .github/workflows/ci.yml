@@ -180,7 +180,7 @@ jobs:
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
 
     - name: Run Pint (Code Style)
-      run: composer lint:test
+      run: composer pint:test
 
     - name: Run PHPStan (Static Analysis)
-      run: composer phpstan
+      run: composer lint
