@@ -160,14 +160,19 @@ jobs:
     - name: Run Tests
       run: composer test
 
-  quality:
+  format:
     runs-on: ubuntu-latest
-    name: 4. Code Quality (Pint & PHPStan)
+    name: 4. Code Formatting (Pint)
     needs: tests
+    if: github.event_name == 'pull_request'
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        ref: ${{ github.head_ref }}
+        fetch-depth: 0
 
     - name: Setup PHP 8.4
       uses: shivammathur/setup-php@v2
@@ -179,7 +184,57 @@ jobs:
     - name: Install Composer dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
 
-    - name: Run Pint (Code Style)
+    - name: Run Pint (Format Code)
+      run: composer pint
+
+    - name: Check for changes
+      id: changes
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "changes=true" >> $GITHUB_OUTPUT
+        else
+          echo "changes=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Commit and push formatted code
+      if: steps.changes.outputs.changes == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "🎨 Auto-format code with Laravel Pint
+
+        Co-authored-by: Laravel Pint <pint@laravel.com>"
+        git push
+
+  quality:
+    runs-on: ubuntu-latest
+    name: 5. Code Quality (PHPStan)
+    needs: format
+    if: always() && (needs.format.result == 'success' || needs.format.result == 'skipped')
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref || github.ref }}
+        fetch-depth: 0
+
+    - name: Pull latest changes
+      if: github.event_name == 'pull_request'
+      run: git pull origin ${{ github.head_ref }}
+
+    - name: Setup PHP 8.4
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.4
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
+        coverage: none
+
+    - name: Install Composer dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
+
+    - name: Run Pint (Check Code Style)
       run: composer pint:test
 
     - name: Run PHPStan (Static Analysis)
