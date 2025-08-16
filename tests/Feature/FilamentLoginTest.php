@@ -2,7 +2,7 @@
 
 use App\Models\User;
 use Filament\Auth\Pages\Login;
-use Filament\Facades\Filament;
+
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 use function Pest\Livewire\livewire;

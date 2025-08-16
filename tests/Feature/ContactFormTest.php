@@ -6,6 +6,7 @@ use App\Models\Inquiry;
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Mail;
+
 use function Pest\Livewire\livewire;
 
 it('renders successfully', function () {
@@ -29,9 +30,9 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => 'Doe',
             'email' => 'john@example.com',
             'subject' => 'Test Subject',
-            'message' => 'This is a test message that is long enough.'
+            'message' => 'This is a test message that is long enough.',
         ],
-        'expectedError' => 'first_name'
+        'expectedError' => 'first_name',
     ],
     'short first name' => [
         'form' => [
@@ -39,9 +40,9 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => 'Doe',
             'email' => 'john@example.com',
             'subject' => 'Test Subject',
-            'message' => 'This is a test message that is long enough.'
+            'message' => 'This is a test message that is long enough.',
         ],
-        'expectedError' => 'first_name'
+        'expectedError' => 'first_name',
     ],
     'long first name' => [
         'form' => [
@@ -49,9 +50,9 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => 'Doe',
             'email' => 'john@example.com',
             'subject' => 'Test Subject',
-            'message' => 'This is a test message that is long enough.'
+            'message' => 'This is a test message that is long enough.',
         ],
-        'expectedError' => 'first_name'
+        'expectedError' => 'first_name',
     ],
     'empty last name' => [
         'form' => [
@@ -59,9 +60,9 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => '',
             'email' => 'john@example.com',
             'subject' => 'Test Subject',
-            'message' => 'This is a test message that is long enough.'
+            'message' => 'This is a test message that is long enough.',
         ],
-        'expectedError' => 'last_name'
+        'expectedError' => 'last_name',
     ],
     'short last name' => [
         'form' => [
@@ -69,9 +70,9 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => 'D',
             'email' => 'john@example.com',
             'subject' => 'Test Subject',
-            'message' => 'This is a test message that is long enough.'
+            'message' => 'This is a test message that is long enough.',
         ],
-        'expectedError' => 'last_name'
+        'expectedError' => 'last_name',
     ],
     'long last name' => [
         'form' => [
@@ -79,9 +80,9 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => str_repeat('D', 51),
             'email' => 'john@example.com',
             'subject' => 'Test Subject',
-            'message' => 'This is a test message that is long enough.'
+            'message' => 'This is a test message that is long enough.',
         ],
-        'expectedError' => 'last_name'
+        'expectedError' => 'last_name',
     ],
     'empty email' => [
         'form' => [
@@ -89,9 +90,9 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => 'Doe',
             'email' => '',
             'subject' => 'Test Subject',
-            'message' => 'This is a test message that is long enough.'
+            'message' => 'This is a test message that is long enough.',
         ],
-        'expectedError' => 'email'
+        'expectedError' => 'email',
     ],
     'invalid email format' => [
         'form' => [
@@ -99,19 +100,19 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => 'Doe',
             'email' => 'invalid-email',
             'subject' => 'Test Subject',
-            'message' => 'This is a test message that is long enough.'
+            'message' => 'This is a test message that is long enough.',
         ],
-        'expectedError' => 'email'
+        'expectedError' => 'email',
     ],
     'long email' => [
         'form' => [
             'first_name' => 'John',
             'last_name' => 'Doe',
-            'email' => str_repeat('a', 250) . '@example.com',
+            'email' => str_repeat('a', 250).'@example.com',
             'subject' => 'Test Subject',
-            'message' => 'This is a test message that is long enough.'
+            'message' => 'This is a test message that is long enough.',
         ],
-        'expectedError' => 'email'
+        'expectedError' => 'email',
     ],
     'empty subject' => [
         'form' => [
@@ -119,9 +120,9 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => 'Doe',
             'email' => 'john@example.com',
             'subject' => '',
-            'message' => 'This is a test message that is long enough.'
+            'message' => 'This is a test message that is long enough.',
         ],
-        'expectedError' => 'subject'
+        'expectedError' => 'subject',
     ],
     'short subject' => [
         'form' => [
@@ -129,9 +130,9 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => 'Doe',
             'email' => 'john@example.com',
             'subject' => 'Test',
-            'message' => 'This is a test message that is long enough.'
+            'message' => 'This is a test message that is long enough.',
         ],
-        'expectedError' => 'subject'
+        'expectedError' => 'subject',
     ],
     'long subject' => [
         'form' => [
@@ -139,9 +140,9 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => 'Doe',
             'email' => 'john@example.com',
             'subject' => str_repeat('T', 101),
-            'message' => 'This is a test message that is long enough.'
+            'message' => 'This is a test message that is long enough.',
         ],
-        'expectedError' => 'subject'
+        'expectedError' => 'subject',
     ],
     'empty message' => [
         'form' => [
@@ -149,9 +150,9 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => 'Doe',
             'email' => 'john@example.com',
             'subject' => 'Test Subject',
-            'message' => ''
+            'message' => '',
         ],
-        'expectedError' => 'message'
+        'expectedError' => 'message',
     ],
     'short message' => [
         'form' => [
@@ -159,9 +160,9 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => 'Doe',
             'email' => 'john@example.com',
             'subject' => 'Test Subject',
-            'message' => 'Short'
+            'message' => 'Short',
         ],
-        'expectedError' => 'message'
+        'expectedError' => 'message',
     ],
     'long message' => [
         'form' => [
@@ -169,16 +170,16 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
             'last_name' => 'Doe',
             'email' => 'john@example.com',
             'subject' => 'Test Subject',
-            'message' => str_repeat('M', 1001)
+            'message' => str_repeat('M', 1001),
         ],
-        'expectedError' => 'message'
+        'expectedError' => 'message',
     ],
 ]);
 
 it('successfully submits valid contact form', function () {
     // Create a user to receive notifications
     $user = User::factory()->create();
-    
+
     expect(Inquiry::count())->toBe(0);
 
     livewire(ContactForm::class)
@@ -192,7 +193,7 @@ it('successfully submits valid contact form', function () {
 
     // Assert inquiry was created
     expect(Inquiry::count())->toBe(1);
-    
+
     $inquiry = Inquiry::first();
     expect($inquiry->first_name)->toBe('John')
         ->and($inquiry->last_name)->toBe('Doe')
@@ -253,7 +254,7 @@ it('sends notification to user when form is submitted', function () {
 
     // Assert notification was sent to the user
     expect($user->notifications()->count())->toBe(1);
-    
+
     $notification = $user->notifications()->first();
     expect($notification->data['title'])->toBe("New Inquiry {$inquiry->ticket_id} received")
         ->and($notification->data['body'])->toContain('Test Subject');

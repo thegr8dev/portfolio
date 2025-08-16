@@ -1,11 +1,10 @@
 <?php
 
-use \Database\Factories\UserFactory;
 use App\Filament\Resources\Users\Pages\CreateUser;
-
 use App\Filament\Resources\Users\Pages\ListUsers;
-use function Pest\Livewire\livewire;
+use Database\Factories\UserFactory;
 
+use function Pest\Livewire\livewire;
 
 it('should have user resource URLs', function () {
     livewire(ListUsers::class)
@@ -25,7 +24,7 @@ it('validates user form inputs with :dataset', function ($form, $expectedError) 
 
         return [
             ['name' => '', 'email' => $user->email, 'password' => 'password123'],
-            'name'
+            'name',
         ];
     },
     'empty email input' => function () {
@@ -33,7 +32,7 @@ it('validates user form inputs with :dataset', function ($form, $expectedError) 
 
         return [
             ['name' => $user->name, 'email' => '', 'password' => 'password123'],
-            'email'
+            'email',
         ];
     },
     'invalid email input' => function () {
@@ -41,7 +40,7 @@ it('validates user form inputs with :dataset', function ($form, $expectedError) 
 
         return [
             ['name' => $user->name, 'email' => 'not-an-email', 'password' => 'password123'],
-            'email'
+            'email',
         ];
     },
     'empty password input' => function () {
@@ -49,7 +48,7 @@ it('validates user form inputs with :dataset', function ($form, $expectedError) 
 
         return [
             ['name' => $user->name, 'email' => $user->email, 'password' => ''],
-            'password'
+            'password',
         ];
     },
 ]);

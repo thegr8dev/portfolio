@@ -37,7 +37,8 @@ class InquiryFactory extends Factory
             $counter++;
             $month = strtoupper(date('M'));
             $day = date('d');
-            return "AK-{$month}{$day}-" . str_pad((string) $counter, 4, '0', STR_PAD_LEFT);
+
+            return "AK-{$month}{$day}-".str_pad((string) $counter, 4, '0', STR_PAD_LEFT);
         }
 
         // In production, use the real generator

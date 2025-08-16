@@ -3,11 +3,9 @@
 use App\Filament\Resources\Inquiries\Pages\ListInquiries;
 use App\InquiryStatus;
 use App\Models\Inquiry;
-use App\Models\User;
 use Filament\Actions\CreateAction;
 use Filament\Actions\Testing\TestAction;
-use Filament\Facades\Filament;
-use function Pest\Laravel\actingAs;
+
 use function Pest\Laravel\assertDatabaseMissing;
 use function Pest\Livewire\livewire;
 

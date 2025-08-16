@@ -2,10 +2,8 @@
 
 use App\Filament\Resources\Inquiries\Pages\ViewInquiry;
 use App\Models\Inquiry;
-use App\Models\User;
 use Filament\Actions\EditAction;
-use Filament\Facades\Filament;
-use function Pest\Laravel\actingAs;
+
 use function Pest\Livewire\livewire;
 
 it('can load the view page', function () {

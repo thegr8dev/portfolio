@@ -3,13 +3,9 @@
 use App\Filament\Resources\Inquiries\Pages\CreateInquiry;
 use App\InquiryStatus;
 use App\Models\Inquiry;
-use App\Models\User;
-use Filament\Facades\Filament;
-use function Pest\Laravel\actingAs;
+
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Livewire\livewire;
-
-
 
 it('can load the create page', function () {
     livewire(CreateInquiry::class)
@@ -66,30 +62,30 @@ it('validates form data when creating inquiry with :dataset', function ($data, $
 })->with([
     'empty first name' => [
         ['first_name' => ''],
-        ['first_name' => 'required']
+        ['first_name' => 'required'],
     ],
     'empty last name' => [
         ['last_name' => ''],
-        ['last_name' => 'required']
+        ['last_name' => 'required'],
     ],
     'empty email' => [
         ['email' => ''],
-        ['email' => 'required']
+        ['email' => 'required'],
     ],
     'invalid email format' => [
         ['email' => 'invalid-email'],
-        ['email' => 'email']
+        ['email' => 'email'],
     ],
     'empty subject' => [
         ['subject' => ''],
-        ['subject' => 'required']
+        ['subject' => 'required'],
     ],
     'empty message' => [
         ['message' => ''],
-        ['message' => 'required']
+        ['message' => 'required'],
     ],
     'empty status' => [
         ['status' => ''],
-        ['status' => 'required']
+        ['status' => 'required'],
     ],
 ]);
