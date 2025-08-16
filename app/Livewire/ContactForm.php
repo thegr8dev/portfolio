@@ -7,6 +7,7 @@ use App\Models\Inquiry;
 use App\Models\User;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
@@ -58,7 +59,7 @@ class ContactForm extends Component
         $this->success = true;
     }
 
-    public function render(): \Illuminate\Contracts\View\View
+    public function render(): View
     {
         return view('livewire.contact-form');
     }

@@ -160,14 +160,22 @@ jobs:
     - name: Run Tests
       run: composer test
 
-  quality:
+  format:
     runs-on: ubuntu-latest
-    name: 4. Code Quality (Pint & PHPStan)
+    name: 4. Code Formatting (Pint)
     needs: tests
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        ref: ${{ github.head_ref }}
+        fetch-depth: 0
 
     - name: Setup PHP 8.4
       uses: shivammathur/setup-php@v2
@@ -179,7 +187,56 @@ jobs:
     - name: Install Composer dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
 
-    - name: Run Pint (Code Style)
+    - name: Run Pint (Format Code)
+      run: composer pint
+
+    - name: Check for changes
+      id: changes
+      run: |
+        git diff --quiet && git diff --staged --quiet || echo "changes=true" >> $GITHUB_OUTPUT
+
+    - name: Commit and push formatted code
+      if: steps.changes.outputs.changes == 'true'
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git add -A
+        git commit -m "🎨 Auto-format code with Laravel Pint
+
+        Co-authored-by: Laravel Pint <pint@laravel.com>"
+        git push origin ${{ github.head_ref }}
+
+  quality:
+    runs-on: ubuntu-latest
+    name: 5. Code Quality (PHPStan)
+    needs: format
+    if: always() && (needs.format.result == 'success' || needs.format.result == 'skipped')
+
+    steps:
+    - name: Checkout code (fresh)
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        ref: ${{ github.head_ref || github.ref }}
+        fetch-depth: 0
+
+    - name: Fetch and reset to latest head
+      if: github.event_name == 'pull_request'
+      run: |
+        git fetch origin ${{ github.head_ref }}
+        git reset --hard origin/${{ github.head_ref }}
+
+    - name: Setup PHP 8.4
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.4
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
+        coverage: none
+
+    - name: Install Composer dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
+
+    - name: Run Pint (Check Code Style)
       run: composer pint:test
 
     - name: Run PHPStan (Static Analysis)
