@@ -8,10 +8,36 @@ on:
   workflow_dispatch:
 
 jobs:
+  # Check if this push is from auto-formatting
+  check-skip:
+    runs-on: ubuntu-latest
+    name: Check if CI should be skipped
+    outputs:
+      skip_ci: ${{ steps.check.outputs.skip }}
+      is_auto_format: ${{ steps.check.outputs.is_auto_format }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Check commit message
+      id: check
+      run: |
+        COMMIT_MSG=$(git log -1 --pretty=%B)
+        if [[ "$COMMIT_MSG" == *"🎨 Auto-format code with Laravel Pint"* ]]; then
+          echo "skip=true" >> $GITHUB_OUTPUT
+          echo "is_auto_format=true" >> $GITHUB_OUTPUT
+          echo "🤖 Auto-format commit detected - skipping full CI"
+        else
+          echo "skip=false" >> $GITHUB_OUTPUT
+          echo "is_auto_format=false" >> $GITHUB_OUTPUT
+          echo "🚀 Regular commit - running full CI"
+        fi
+
   install:
     runs-on: ubuntu-latest
     name: 1. Installation Check
-    if: "!contains(github.event.head_commit.message, '🎨 Auto-format code with Laravel Pint')"
+    needs: check-skip
+    if: needs.check-skip.outputs.skip_ci != 'true'
     
     steps:
     - name: Checkout code
@@ -48,8 +74,8 @@ jobs:
   migrations:
     runs-on: ubuntu-latest
     name: 2. Migration Check
-    needs: install
-    if: "!contains(github.event.head_commit.message, '🎨 Auto-format code with Laravel Pint')"
+    needs: [check-skip, install]
+    if: needs.check-skip.outputs.skip_ci != 'true'
 
     services:
       mysql:
@@ -108,8 +134,8 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     name: 3. Test Suite
-    needs: migrations
-    if: "!contains(github.event.head_commit.message, '🎨 Auto-format code with Laravel Pint')"
+    needs: [check-skip, migrations]
+    if: needs.check-skip.outputs.skip_ci != 'true'
 
     services:
       mysql:
@@ -166,8 +192,8 @@ jobs:
   format:
     runs-on: ubuntu-latest
     name: 4. Code Formatting (Pint)
-    needs: tests
-    if: github.event_name == 'pull_request' && !contains(github.event.head_commit.message, '🎨 Auto-format code with Laravel Pint')
+    needs: [check-skip, tests]
+    if: github.event_name == 'pull_request' && needs.check-skip.outputs.skip_ci != 'true'
     permissions:
       contents: write
       pull-requests: write
@@ -218,7 +244,8 @@ jobs:
   quality:
     runs-on: ubuntu-latest
     name: 5. Code Quality (PHPStan)
-    if: always() && (github.event_name == 'pull_request' || contains(github.event.head_commit.message, '🎨 Auto-format code with Laravel Pint'))
+    needs: [check-skip, format]
+    if: always() && needs.check-skip.outputs.skip_ci != 'true' && (needs.format.result == 'success' || needs.format.result == 'skipped')
 
     steps:
     - name: Checkout code (fresh)
@@ -252,3 +279,37 @@ jobs:
 
     - name: Run PHPStan (Static Analysis)
       run: composer lint
+
+  # Lightweight job for auto-format commits
+  auto-format-check:
+    runs-on: ubuntu-latest
+    name: Auto-format Verification
+    needs: check-skip
+    if: needs.check-skip.outputs.skip_ci == 'true'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup PHP 8.4
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.4
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
+        coverage: none
+
+    - name: Install Composer dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
+
+    - name: Verify code style is correct
+      run: composer pint:test
+      
+    - name: Quick syntax check
+      run: php artisan about
+      
+    - name: Auto-format commit processed
+      run: |
+        echo "🎨 Auto-format commit verified successfully"
+        echo "✅ Code style is correct"
+        echo "✅ Syntax is valid"
+        echo "⏭️  Full CI pipeline skipped (already verified)"
