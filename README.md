@@ -1,61 +1,182 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Boost
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![Laravel](https://img.shields.io/badge/Laravel-12.24.0-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.3.24-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
+[![Filament](https://img.shields.io/badge/Filament-4.0.1-FDBA74?style=for-the-badge&logo=laravel&logoColor=white)](https://filamentphp.com)
+[![Livewire](https://img.shields.io/badge/Livewire-3.6.4-4E56A6?style=for-the-badge&logo=livewire&logoColor=white)](https://livewire.laravel.com)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.0.0-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![Pest](https://img.shields.io/badge/Pest-3.8.2-4F46E5?style=for-the-badge)](https://pestphp.com)
+[![Tests](https://img.shields.io/badge/Tests-80%20Passing-4CAF50?style=for-the-badge)](https://pestphp.com)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-## About Laravel
+A modern Laravel application with Filament admin panel for managing customer inquiries and contact forms. Built with the latest Laravel 12, Filament 4, and cutting-edge web technologies.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Customer Inquiry Management**: Complete CRUD operations for customer inquiries with unique ticket ID generation
+- **Contact Form**: Public-facing contact form with email notifications
+- **Admin Panel**: Powerful Filament admin interface with authentication
+- **Status Tracking**: Inquiry status management (Pending, In Progress, Resolved, Closed)
+- **Email Notifications**: Automated email notifications for form submissions
+- **Modern UI**: Built with TailwindCSS 4 and Livewire 3
+- **Comprehensive Testing**: 80 passing tests with Pest framework
+- **Code Quality**: PHPStan, Pint, and Rector for code quality assurance
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🛠️ Tech Stack
 
-## Learning Laravel
+- **Backend**: Laravel 12.24.0 with PHP 8.3.24
+- **Admin Panel**: Filament 4.0.1
+- **Frontend**: Livewire 3.6.4 + TailwindCSS 4.0.0
+- **Database**: MySQL with Eloquent ORM
+- **Testing**: Pest 3.8.2 with Laravel and Livewire plugins
+- **Code Quality**: PHPStan (Larastan), Laravel Pint, Rector
+- **Development**: Laravel Herd, Vite 7.0.4
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📋 Requirements
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- PHP 8.2 or higher
+- Composer
+- Node.js & npm
+- MySQL/MariaDB
+- Laravel Herd (recommended) or traditional LAMP/LEMP stack
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🔧 Installation
 
-## Laravel Sponsors
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd boost
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. **Install PHP dependencies**
+   ```bash
+   composer install
+   ```
 
-### Premium Partners
+3. **Install Node.js dependencies**
+   ```bash
+   npm install
+   ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+4. **Environment setup**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-## Contributing
+5. **Database setup**
+   ```bash
+   php artisan migrate
+   php artisan db:seed
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+6. **Build assets**
+   ```bash
+   npm run build
+   ```
 
-## Code of Conduct
+## 🚀 Development
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Start the development environment:
 
-## Security Vulnerabilities
+```bash
+composer run dev
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+This command runs:
+- Laravel development server
+- Queue worker
+- Log monitoring (Pail)
+- Vite asset compilation
 
-## License
+Or run services individually:
+```bash
+php artisan serve          # Development server
+npm run dev                # Asset compilation
+php artisan queue:work     # Queue processing
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🧪 Testing
+
+Run the complete test suite:
+```bash
+composer run test
+```
+
+Run specific test types:
+```bash
+php artisan test --filter=ContactForm    # Specific test
+php artisan test tests/Feature/          # Feature tests only
+php artisan test tests/Unit/              # Unit tests only
+```
+
+## 🔍 Code Quality
+
+The project includes comprehensive code quality tools:
+
+```bash
+composer run quality    # Run all quality checks
+composer run pint       # Fix code style
+composer run lint       # Static analysis
+composer run rector     # Code refactoring
+```
+
+## 📊 Models & Database
+
+### Inquiry Model
+- **Ticket ID**: Unique auto-generated ticket identifier
+- **Customer Info**: Name, email, subject, message
+- **Status**: Pending, In Progress, Resolved, Closed
+- **Timestamps**: Creation and update tracking
+
+### User Model
+- Standard Laravel authentication
+- Admin panel access control
+
+## 🎨 Admin Panel
+
+Access the Filament admin panel at: `https://boost.test/admin`
+
+Features:
+- Inquiry management with full CRUD operations
+- User management
+- Advanced filtering and search
+- Bulk operations
+- Responsive design
+
+## 📧 Email Configuration
+
+Configure your email settings in `.env`:
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=your-smtp-host
+MAIL_PORT=587
+MAIL_USERNAME=your-username
+MAIL_PASSWORD=your-password
+MAIL_ENCRYPTION=tls
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run quality checks: `composer run quality`
+5. Run tests: `composer run test`
+6. Submit a pull request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔗 Links
+
+- **Application**: https://boost.test
+- **Admin Panel**: https://boost.test/admin
+- **Laravel Documentation**: https://laravel.com/docs
+- **Filament Documentation**: https://filamentphp.com/docs
+- **Pest Testing**: https://pestphp.com
+
+---
+
+Built with ❤️ using Laravel and modern web technologies.
