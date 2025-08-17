@@ -135,7 +135,7 @@ composer run rector     # Code refactoring
 
 ## 🎨 Admin Panel
 
-Access the Filament admin panel at: `https://boost.test/admin`
+Access the Filament admin panel at: `https://localhost:8000/admin`
 
 Features:
 - Inquiry management with full CRUD operations
@@ -171,8 +171,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
-- **Application**: https://boost.test
-- **Admin Panel**: https://boost.test/admin
+- **Application**: https://localhost:8000
+- **Admin Panel**: https://localhost:8000/admin
 - **Laravel Documentation**: https://laravel.com/docs
 - **Filament Documentation**: https://filamentphp.com/docs
 - **Pest Testing**: https://pestphp.com
