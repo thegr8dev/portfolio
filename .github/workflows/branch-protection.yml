@@ -1,7 +1,8 @@
 name: Branch Protection
 
 on:
-  pull_request_target:
+  pull_request:
+    branches: [ main, dev ]
     types:
       - opened
       - reopened
@@ -11,7 +12,7 @@ on:
 jobs:
   check-branch-flow:
     runs-on: ubuntu-latest
-    name: Enforce Branch Flow Rules
+    name: check-branch-flow
     
     steps:
     - name: Check branch flow rules
