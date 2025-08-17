@@ -11,6 +11,7 @@ jobs:
   install:
     runs-on: ubuntu-latest
     name: 1. Installation Check
+    if: "!contains(github.event.head_commit.message, '🎨 Auto-format code with Laravel Pint')"
     
     steps:
     - name: Checkout code
@@ -48,6 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     name: 2. Migration Check
     needs: install
+    if: "!contains(github.event.head_commit.message, '🎨 Auto-format code with Laravel Pint')"
 
     services:
       mysql:
@@ -107,6 +109,7 @@ jobs:
     runs-on: ubuntu-latest
     name: 3. Test Suite
     needs: migrations
+    if: "!contains(github.event.head_commit.message, '🎨 Auto-format code with Laravel Pint')"
 
     services:
       mysql:
@@ -164,7 +167,7 @@ jobs:
     runs-on: ubuntu-latest
     name: 4. Code Formatting (Pint)
     needs: tests
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && !contains(github.event.head_commit.message, '🎨 Auto-format code with Laravel Pint')
     permissions:
       contents: write
       pull-requests: write
@@ -215,8 +218,7 @@ jobs:
   quality:
     runs-on: ubuntu-latest
     name: 5. Code Quality (PHPStan)
-    needs: format
-    if: always() && (needs.format.result == 'success' || needs.format.result == 'skipped')
+    if: always() && (github.event_name == 'pull_request' || contains(github.event.head_commit.message, '🎨 Auto-format code with Laravel Pint'))
 
     steps:
     - name: Checkout code (fresh)
