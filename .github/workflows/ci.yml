@@ -236,6 +236,9 @@ jobs:
     - name: Install Composer dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
 
+    - name: Run Type Coverage (Check Code Type Coverage)
+      run: composer type-coverage
+
     - name: Run Pint (Check Code Style)
       run: composer pint:test
 
