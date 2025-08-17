@@ -13,7 +13,10 @@
     "APP_ENV": "production",
     "APP_DEBUG": "false",
     "LOG_CHANNEL": "stderr",
-    "SESSION_DRIVER": "cookie"
-  },
-  "outputDirectory": "public"
+    "SESSION_DRIVER": "cookie",
+    "VIEW_COMPILED_PATH": "/tmp/views",
+    "CACHE_DRIVER": "array",
+    "SESSION_DOMAIN": ".vercel.app",
+    "VERCEL": "1"
+  }
 }
