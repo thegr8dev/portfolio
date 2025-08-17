@@ -1,0 +1,12 @@
+/vendor
+/node_modules
+/storage
+/.env
+/.env.*
+/phpunit.xml
+/phpstan.neon
+/rector.php
+/tests
+*.log
+.git
+.DS_Store
