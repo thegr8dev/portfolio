@@ -8,22 +8,12 @@
                     <p class="text-blue-600 dark:text-blue-400 font-medium mb-4 tracking-wide">ENGINEERING MANAGER /
                         SENIOR LARAVEL DEVELOPER</p>
                     <h1 class="hero-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 whitespace-nowrap overflow-hidden">
-                        <span id="typing-text" class="whitespace-nowrap inline-block"></span><span id="cursor" class="typing-cursor">|</span>
+                        <span id="typing-text" class="whitespace-nowrap inline-block"></span><span id="cursor" class="animate-blink">|</span>
                     </h1>
                     <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto lg:mx-0">
                         Experienced developer specializing in building scalable, multi-tenant web applications using
                         the TALL stack (Tailwind, Alpine.js, Laravel, Livewire).
                     </p>
-                    
-                    <style>
-                        @keyframes blink {
-                            0%, 100% { opacity: 1; }
-                            50% { opacity: 0; }
-                        }
-                        .typing-cursor {
-                            animation: blink 1s step-end infinite;
-                        }
-                    </style>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                         <a href="#projects"
                             class="px-8 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium transition-colors duration-200">View
@@ -64,8 +54,8 @@
                         <!-- Profile image container -->
                         <div
                             class="relative w-full h-full overflow-hidden rounded-3xl border-4 border-white dark:border-gray-800 shadow-2xl">
-                            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
-                                alt="Ankit Kabra" class="w-full h-full object-cover" />
+                            <img src="{{ asset('images/profile/ankit.png') }}"
+                                alt="Ankit Kabra" class="max-w-full max-h-full object-cover" />
                         </div>
                     </div>
 
