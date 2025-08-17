@@ -193,18 +193,24 @@ jobs:
     - name: Check for changes
       id: changes
       run: |
-        git diff --quiet && git diff --staged --quiet || echo "changes=true" >> $GITHUB_OUTPUT
+        if git diff --quiet; then
+          echo "No changes found"
+          echo "changes=false" >> $GITHUB_OUTPUT
+        else
+          echo "Changes found"
+          echo "changes=true" >> $GITHUB_OUTPUT
+        fi
 
     - name: Commit and push formatted code
       if: steps.changes.outputs.changes == 'true'
       run: |
-        git config --global user.email "action@github.com"
-        git config --global user.name "GitHub Action"
-        git add -A
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
         git commit -m "🎨 Auto-format code with Laravel Pint
 
         Co-authored-by: Laravel Pint <pint@laravel.com>"
-        git push origin ${{ github.head_ref }}
+        git push
 
   quality:
     runs-on: ubuntu-latest
