@@ -57,7 +57,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->sidebarCollapsibleOnDesktop()
             ->errorNotifications(true)
-            ->spa(hasPrefetching: true)
+            ->spa()
             ->databaseTransactions()
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s');
