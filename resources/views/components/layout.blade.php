@@ -18,7 +18,7 @@
     <meta property="og:url" content="{{ config('app.url') }}">
     <meta property="og:title" content="Ankit Kabra | Engineering Manager / Senior Laravel Developer">
     <meta property="og:description" content="Engineering Manager & Senior Laravel Developer with 6.5+ years building scalable multi-tenant web applications using TALL stack. Expert in Filament, team leadership, and AI integration.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:image" content="{{ asset('profile/ankit.png') }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="en_US">
@@ -29,8 +29,8 @@
     <meta property="twitter:url" content="{{ config('app.url') }}">
     <meta property="twitter:title" content="Ankit Kabra | Engineering Manager / Senior Laravel Developer">
     <meta property="twitter:description" content="Engineering Manager & Senior Laravel Developer with 6.5+ years building scalable multi-tenant web applications using TALL stack. Expert in Filament, team leadership, and AI integration.">
-    <meta property="twitter:image" content="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80">
-    
+    <meta property="twitter:image" content="{{ asset('profile/ankit.png') }}">
+
     <!-- Additional SEO Tags -->
     <meta name="theme-color" content="#2563eb">
     <meta name="msapplication-TileColor" content="#2563eb">
