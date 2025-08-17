@@ -63,9 +63,9 @@
 
                         <!-- Profile image container -->
                         <div
-                            class="relative w-full h-full overflow-hidden rounded-3xl border-4 border-white dark:border-gray-800 shadow-2xl">
-                            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
-                                alt="Ankit Kabra" class="w-full h-full object-cover" />
+                            class="relative w-full h-full overflow-hidden rounded-3xl border-4 border-white dark:border-gray-800 shadow-2xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900">
+                            <img src="{{ asset('profile/ankit.png') }}"
+                                alt="Ankit Kabra" class="w-full h-full object-cover" style="object-position: center 30%;" />
                         </div>
                     </div>
 
