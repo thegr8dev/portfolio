@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[ObservedBy(InquiryObserver::class)]
 /**
@@ -48,5 +49,13 @@ class Inquiry extends Model
     public function getRouteKeyName(): string
     {
         return 'ticket_id';
+    }
+
+    /**
+     * Get all replies for this inquiry.
+     */
+    public function replies(): HasMany
+    {
+        return $this->hasMany(InquiryReply::class);
     }
 }

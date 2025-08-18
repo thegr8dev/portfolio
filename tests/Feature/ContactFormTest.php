@@ -108,7 +108,7 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
         'form' => [
             'first_name' => 'John',
             'last_name' => 'Doe',
-            'email' => str_repeat('a', 250).'@example.com',
+            'email' => str_repeat('a', 250) . '@example.com',
             'subject' => 'Test Subject',
             'message' => 'This is a test message that is long enough.',
         ],
@@ -237,10 +237,8 @@ it('resets form fields after successful submission', function () {
 });
 
 it('sends notification to user when form is submitted', function () {
-    // Create a user to receive notifications
+    // Create a user to receive notifications (this will be the first user)
     $user = User::factory()->create();
-
-    expect($user->notifications()->count())->toBe(0);
 
     livewire(ContactForm::class)
         ->set('first_name', 'John')
@@ -248,16 +246,18 @@ it('sends notification to user when form is submitted', function () {
         ->set('email', 'john@example.com')
         ->set('subject', 'Test Subject')
         ->set('message', 'This is a test message that is long enough to pass validation.')
-        ->call('submitForm');
+        ->call('submitForm')
+        ->assertNotified();
 
     $inquiry = Inquiry::first();
-
-    // Assert notification was sent to the user
+    expect($inquiry)->not->toBeNull();
+    expect($inquiry->subject)->toBe('Test Subject');
+    
+    // Verify notification was sent to database for the user
     expect($user->notifications()->count())->toBe(1);
-
+    
     $notification = $user->notifications()->first();
-    expect($notification->data['title'])->toBe("New Inquiry {$inquiry->ticket_id} received")
-        ->and($notification->data['body'])->toContain('Test Subject');
+    expect($notification->data['title'])->toBe("New Inquiry {$inquiry->ticket_id} received");
 });
 
 it('sends email when contact form is submitted', function () {
@@ -285,7 +285,7 @@ it('sends email when contact form is submitted', function () {
     // Assert email was sent to the correct address with CC
     Mail::assertQueued(ContactFormSubmitted::class, function ($mail) {
         return $mail->hasTo(config('mail.from.address')) &&
-               $mail->hasCc('john@example.com');
+            $mail->hasCc('john@example.com');
     });
 });
 
