@@ -7,13 +7,15 @@ use App\Mail\InquiryReplyMail;
 use App\Models\Inquiry;
 use App\Models\InquiryReply;
 use Filament\Actions\Action;
-use Filament\Schemas\Schema;
-use Filament\Support\Enums\Size;
-use Filament\Support\Colors\Color;
-use Filament\Support\Icons\Heroicon;
+use Filament\Forms\Components\Textarea;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
-use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Schema;
+use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Size;
+use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Facades\Mail;
 
 class InquiryInfolist
 {
