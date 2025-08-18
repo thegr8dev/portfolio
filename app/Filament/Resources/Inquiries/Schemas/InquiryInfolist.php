@@ -3,8 +3,11 @@
 namespace App\Filament\Resources\Inquiries\Schemas;
 
 use App\InquiryStatus;
+use App\Mail\InquiryReplyMail;
 use App\Models\Inquiry;
+use App\Models\InquiryReply;
 use Filament\Actions\Action;
+use Filament\Forms\Components\Textarea;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
@@ -12,6 +15,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Size;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Facades\Mail;
 
 class InquiryInfolist
 {
@@ -57,8 +61,44 @@ class InquiryInfolist
                             ->icon(Heroicon::ChatBubbleLeft)
                             ->visible(fn (Inquiry $record): bool => $record->status !== InquiryStatus::Closed)
                             ->color(Color::Blue)
-                            ->action(function () {
-                                // Reply functionality to be implemented later
+                            ->form([
+                                Textarea::make('message')
+                                    ->label('Reply Message')
+                                    ->placeholder('Type your reply message here...')
+                                    ->required()
+                                    ->rows(6)
+                                    ->columnSpanFull(),
+                            ])
+                            ->modalHeading('Reply to Inquiry')
+                            ->modalDescription(fn (Inquiry $record): string => "Replying to: {$record->subject} [Ticket: {$record->ticket_id}]")
+                            ->modalSubmitActionLabel('Send Reply')
+                            ->action(function (array $data, Inquiry $record): void {
+                                // Create the reply record
+                                $reply = InquiryReply::create([
+                                    'inquiry_id' => $record->id,
+                                    'user_id' => auth()->id(),
+                                    'message' => $data['message'],
+                                    'is_sent' => false,
+                                ]);
+
+                                // Send the email
+                                try {
+                                    Mail::send(new InquiryReplyMail($record, $reply));
+
+                                    // Mark as sent
+                                    $reply->update([
+                                        'is_sent' => true,
+                                        'sent_at' => now(),
+                                    ]);
+
+                                    // Update inquiry status to In Progress if it's pending
+                                    if ($record->status === InquiryStatus::Pending) {
+                                        $record->update(['status' => InquiryStatus::InProgress]);
+                                    }
+                                } catch (\Exception $e) {
+                                    // Log the error but don't fail the action
+                                    logger()->error('Failed to send inquiry reply email: '.$e->getMessage());
+                                }
                             }),
 
                         Action::make('mark_as_closed')

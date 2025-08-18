@@ -31,14 +31,14 @@ class InquiryFactory extends Factory
 
     private function generateUniqueTicketId(): string
     {
-        // In testing, generate unique ticket IDs to avoid conflicts
-        if (app()->environment('testing')) {
-            static $counter = 0;
-            $counter++;
-            $month = strtoupper(date('M'));
-            $day = date('d');
+        // In testing environment or when running tests, generate unique ticket IDs to avoid conflicts
+        if (app()->environment('testing') || app()->runningUnitTests()) {
+            // Use microtime and random number for uniqueness
+            $timestamp = (int) (microtime(true) * 10000);
+            $random = mt_rand(1000, 9999);
+            $unique = $timestamp + $random;
 
-            return "AK-{$month}{$day}-".str_pad((string) $counter, 4, '0', STR_PAD_LEFT);
+            return "TK-TEST-{$unique}";
         }
 
         // In production, use the real generator
