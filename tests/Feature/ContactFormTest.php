@@ -108,7 +108,7 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
         'form' => [
             'first_name' => 'John',
             'last_name' => 'Doe',
-            'email' => str_repeat('a', 250).'@example.com',
+            'email' => str_repeat('a', 250) . '@example.com',
             'subject' => 'Test Subject',
             'message' => 'This is a test message that is long enough.',
         ],
