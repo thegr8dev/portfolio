@@ -5,13 +5,13 @@ namespace App\Filament\Resources\Inquiries\Schemas;
 use App\InquiryStatus;
 use App\Models\Inquiry;
 use Filament\Actions\Action;
-use Filament\Schemas\Schema;
-use Filament\Support\Enums\Size;
-use Filament\Support\Colors\Color;
-use Filament\Support\Icons\Heroicon;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
-use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Schema;
+use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Size;
+use Filament\Support\Icons\Heroicon;
 
 class InquiryInfolist
 {
@@ -23,8 +23,8 @@ class InquiryInfolist
                     ->columnSpanFull()
                     ->headerActions([
                         Action::make('status_badge')
-                            ->label(fn(Inquiry $record): string => $record->status->getLabel())
-                            ->color(fn(Inquiry $record): string => $record->status->getBadgeColor())
+                            ->label(fn (Inquiry $record): string => $record->status->getLabel())
+                            ->color(fn (Inquiry $record): string => $record->status->getBadgeColor())
                             ->badge()
                             ->size(Size::Large)
                             ->disabled(),
@@ -55,7 +55,7 @@ class InquiryInfolist
                         Action::make('reply')
                             ->label('Reply')
                             ->icon(Heroicon::ChatBubbleLeft)
-                            ->visible(fn(Inquiry $record): bool => $record->status !== InquiryStatus::Closed)
+                            ->visible(fn (Inquiry $record): bool => $record->status !== InquiryStatus::Closed)
                             ->color(Color::Blue)
                             ->action(function () {
                                 // Reply functionality to be implemented later
@@ -65,7 +65,7 @@ class InquiryInfolist
                             ->label('Mark as Closed')
                             ->icon(Heroicon::CheckCircle)
                             ->color(Color::Green)
-                            ->visible(fn(Inquiry $record): bool => $record->status !== InquiryStatus::Closed)
+                            ->visible(fn (Inquiry $record): bool => $record->status !== InquiryStatus::Closed)
                             ->requiresConfirmation()
                             ->modalIcon(Heroicon::CheckCircle)
                             ->modalHeading('Mark Inquiry as Closed')
