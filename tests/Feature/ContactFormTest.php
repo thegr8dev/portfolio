@@ -108,7 +108,7 @@ it('validates contact form inputs with :dataset', function ($form, $expectedErro
         'form' => [
             'first_name' => 'John',
             'last_name' => 'Doe',
-            'email' => str_repeat('a', 250) . '@example.com',
+            'email' => str_repeat('a', 250).'@example.com',
             'subject' => 'Test Subject',
             'message' => 'This is a test message that is long enough.',
         ],
@@ -252,10 +252,10 @@ it('sends notification to user when form is submitted', function () {
     $inquiry = Inquiry::first();
     expect($inquiry)->not->toBeNull();
     expect($inquiry->subject)->toBe('Test Subject');
-    
+
     // Verify notification was sent to database for the user
     expect($user->notifications()->count())->toBe(1);
-    
+
     $notification = $user->notifications()->first();
     expect($notification->data['title'])->toBe("New Inquiry {$inquiry->ticket_id} received");
 });

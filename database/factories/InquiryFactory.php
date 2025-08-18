@@ -37,7 +37,7 @@ class InquiryFactory extends Factory
             $timestamp = (int) (microtime(true) * 10000);
             $random = mt_rand(1000, 9999);
             $unique = $timestamp + $random;
-            
+
             return "TK-TEST-{$unique}";
         }
 
