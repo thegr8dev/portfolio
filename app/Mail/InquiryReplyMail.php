@@ -31,7 +31,7 @@ class InquiryReplyMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            to: $this->inquiry->email,
+            to: [$this->inquiry->email],
             subject: "Re: {$this->inquiry->subject} [Ticket: {$this->inquiry->ticket_id}]",
         );
     }

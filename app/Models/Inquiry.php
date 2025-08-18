@@ -53,6 +53,8 @@ class Inquiry extends Model
 
     /**
      * Get all replies for this inquiry.
+     *
+     * @return HasMany<InquiryReply, $this>
      */
     public function replies(): HasMany
     {

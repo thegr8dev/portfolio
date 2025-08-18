@@ -24,6 +24,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read mixed $full_name
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\InquiryReply> $replies
+ * @property-read int|null $replies_count
  * @method static \Database\Factories\InquiryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Inquiry newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Inquiry newQuery()
@@ -42,6 +44,36 @@ namespace App\Models{
  */
 	#[\AllowDynamicProperties]
 	class IdeHelperInquiry {}
+}
+
+namespace App\Models{
+/**
+ * @property int $id
+ * @property int $inquiry_id
+ * @property int $user_id
+ * @property string $message
+ * @property bool $is_sent
+ * @property int|null $sent_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Inquiry $inquiry
+ * @property-read \App\Models\User $user
+ * @method static \Database\Factories\InquiryReplyFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InquiryReply newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InquiryReply newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InquiryReply query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InquiryReply whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InquiryReply whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InquiryReply whereInquiryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InquiryReply whereIsSent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InquiryReply whereMessage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InquiryReply whereSentAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InquiryReply whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|InquiryReply whereUserId($value)
+ * @mixin \Eloquent
+ */
+	#[\AllowDynamicProperties]
+	class IdeHelperInquiryReply {}
 }
 
 namespace App\Models{

@@ -6,8 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @mixin IdeHelperInquiryReply
+ */
 class InquiryReply extends Model
 {
+    /** @use HasFactory<\Database\Factories\InquiryReplyFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -23,11 +27,17 @@ class InquiryReply extends Model
         'sent_at' => 'timestamp',
     ];
 
+    /**
+     * @return BelongsTo<Inquiry, $this>
+     */
     public function inquiry(): BelongsTo
     {
         return $this->belongsTo(Inquiry::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
