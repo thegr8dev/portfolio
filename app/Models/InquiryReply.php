@@ -24,7 +24,7 @@ class InquiryReply extends Model
 
     protected $casts = [
         'is_sent' => 'boolean',
-        'sent_at' => 'timestamp',
+        'sent_at' => 'datetime',
     ];
 
     /**

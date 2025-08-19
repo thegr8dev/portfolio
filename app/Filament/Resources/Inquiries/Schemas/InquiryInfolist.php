@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Inquiries\Schemas;
 
+use App\Filament\Resources\Inquiries\InquiryResource;
 use App\InquiryStatus;
 use App\Mail\InquiryReplyMail;
 use App\Models\Inquiry;
@@ -100,6 +101,14 @@ class InquiryInfolist
                                     logger()->error('Failed to send inquiry reply email: '.$e->getMessage());
                                 }
                             }),
+
+                        Action::make('view_replies')
+                            ->label('View Replies')
+                            ->icon(Heroicon::ChatBubbleLeftEllipsis)
+                            ->color(Color::Gray)
+                            ->url(fn (Inquiry $record): string => InquiryResource::getUrl('replies', ['record' => $record]))
+                            ->badge(fn (Inquiry $record): int => $record->replies->count())
+                            ->badgeColor(Color::Blue),
 
                         Action::make('mark_as_closed')
                             ->label('Mark as Closed')
