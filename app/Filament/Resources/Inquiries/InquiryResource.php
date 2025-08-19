@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Inquiries;
 
 use App\Filament\Resources\Inquiries\Pages\CreateInquiry;
 use App\Filament\Resources\Inquiries\Pages\EditInquiry;
+use App\Filament\Resources\Inquiries\Pages\InquiryReplies;
 use App\Filament\Resources\Inquiries\Pages\ListInquiries;
 use App\Filament\Resources\Inquiries\Pages\ViewInquiry;
 use App\Filament\Resources\Inquiries\Schemas\InquiryForm;
@@ -53,6 +54,7 @@ class InquiryResource extends Resource
             'create' => CreateInquiry::route('/create'),
             'view' => ViewInquiry::route('/{record}'),
             'edit' => EditInquiry::route('/{record}/edit'),
+            'replies' => InquiryReplies::route('/{record}/replies'),
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Inquiries\Schemas;
 
+use App\Filament\Resources\Inquiries\InquiryResource;
 use App\InquiryStatus;
 use App\Mail\InquiryReplyMail;
 use App\Models\Inquiry;
@@ -27,8 +28,8 @@ class InquiryInfolist
                     ->columnSpanFull()
                     ->headerActions([
                         Action::make('status_badge')
-                            ->label(fn(Inquiry $record): string => $record->status->getLabel())
-                            ->color(fn(Inquiry $record): string => $record->status->getBadgeColor())
+                            ->label(fn (Inquiry $record): string => $record->status->getLabel())
+                            ->color(fn (Inquiry $record): string => $record->status->getBadgeColor())
                             ->badge()
                             ->size(Size::Large)
                             ->disabled(),
@@ -59,7 +60,7 @@ class InquiryInfolist
                         Action::make('reply')
                             ->label('Reply')
                             ->icon(Heroicon::ChatBubbleLeft)
-                            ->visible(fn(Inquiry $record): bool => $record->status !== InquiryStatus::Closed)
+                            ->visible(fn (Inquiry $record): bool => $record->status !== InquiryStatus::Closed)
                             ->color(Color::Blue)
                             ->form([
                                 Textarea::make('message')
@@ -70,7 +71,7 @@ class InquiryInfolist
                                     ->columnSpanFull(),
                             ])
                             ->modalHeading('Reply to Inquiry')
-                            ->modalDescription(fn(Inquiry $record): string => "Replying to: {$record->subject} [Ticket: {$record->ticket_id}]")
+                            ->modalDescription(fn (Inquiry $record): string => "Replying to: {$record->subject} [Ticket: {$record->ticket_id}]")
                             ->modalSubmitActionLabel('Send Reply')
                             ->action(function (array $data, Inquiry $record): void {
                                 // Create the reply record
@@ -97,15 +98,23 @@ class InquiryInfolist
                                     }
                                 } catch (\Exception $e) {
                                     // Log the error but don't fail the action
-                                    logger()->error('Failed to send inquiry reply email: ' . $e->getMessage());
+                                    logger()->error('Failed to send inquiry reply email: '.$e->getMessage());
                                 }
                             }),
+
+                        Action::make('view_replies')
+                            ->label('View Replies')
+                            ->icon(Heroicon::ChatBubbleLeftEllipsis)
+                            ->color(Color::Gray)
+                            ->url(fn (Inquiry $record): string => InquiryResource::getUrl('replies', ['record' => $record]))
+                            ->badge(fn (Inquiry $record): int => $record->replies->count())
+                            ->badgeColor(Color::Blue),
 
                         Action::make('mark_as_closed')
                             ->label('Mark as Closed')
                             ->icon(Heroicon::CheckCircle)
                             ->color(Color::Green)
-                            ->visible(fn(Inquiry $record): bool => $record->status !== InquiryStatus::Closed)
+                            ->visible(fn (Inquiry $record): bool => $record->status !== InquiryStatus::Closed)
                             ->requiresConfirmation()
                             ->modalIcon(Heroicon::CheckCircle)
                             ->modalHeading('Mark Inquiry as Closed')
